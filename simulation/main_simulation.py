@@ -55,7 +55,6 @@ class Cone(TypedDict):
 
 
 def process_pygame(
-    csv_file: str,
     cones: Sequence[Cone],
     world_bounds: WorldBounds,
     path: Optional[Sequence[Point2D]] = None,
@@ -64,12 +63,10 @@ def process_pygame(
     Open a Pygame window to visualize the track and (optionally) a path.
 
     Args:
-        csv_file: Original CSV path (kept for API compatibility, unused here).
         cones: List of cones with fields "tag", "x", "y".
         world_bounds: World bounds (min_x, max_x, min_y, max_y).
         path: List of (x, y) points representing a path to draw/animate.
     """
-    _ = csv_file  # API compatibility: intentionally unused
 
     pygame.init()
     screen = _create_screen(DEFAULT_WIDTH, DEFAULT_HEIGHT)
@@ -122,7 +119,6 @@ def process_pygame(
             dragging=dragging,
             last_mouse_pos=last_mouse_pos,
             car_path_index=car_path_index,
-            dt=dt,
         )
 
         display_scale = _update_display_scale(display_scale, dt)
@@ -203,7 +199,7 @@ def _handle_events(
     dragging: bool,
     last_mouse_pos: Optional[Tuple[int, int]],
     car_path_index: int,
-    dt: float,
+
 ) -> Tuple[
     bool,
     pygame.Surface,
