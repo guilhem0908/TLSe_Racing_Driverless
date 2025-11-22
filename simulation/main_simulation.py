@@ -29,6 +29,8 @@ DEFAULT_HEIGHT: int = 800
 BACKGROUND_COLOR: Tuple[int, int, int] = (30, 30, 30)
 FPS: int = 60
 
+CAR_SIZE_M: float = 1.5
+
 COLORS: Dict[str, Tuple[int, int, int]] = {
     "yellow": (255, 255, 0),
     "blue": (50, 100, 255),
@@ -48,7 +50,7 @@ Point2D = Tuple[float, float]
 
 
 class Cone(TypedDict):
-    """A cone detected/loaded from track data."""
+    """A cone item loaded from track data."""
     tag: str
     x: float
     y: float
@@ -76,7 +78,7 @@ def process_pygame(
     running = True
 
     camera = Camera(world_bounds, screen.get_size())
-    display_scale = 1.0  # visual scaling with arrow keys
+    display_scale = 1.0  # visual scaling with arrow keys (purely visual)
 
     fullscreen = False
     f11_pressed_during_resize = False
@@ -132,8 +134,6 @@ def process_pygame(
                 camera=camera,
                 path=path,
                 screen_size=screen_size,
-                base_car_width_px=base_sizes["car_width_px"],
-                base_car_length_px=base_sizes["car_length_px"],
                 display_scale=display_scale,
                 car_path_index=car_path_index,
             )
@@ -166,22 +166,19 @@ def _create_screen(width: int, height: int) -> pygame.Surface:
 
 def _compute_base_sizes(screen_size: Tuple[int, int]) -> Dict[str, float]:
     """
-    Compute base sizes (cone radius and car dimensions) based on the smallest
-    window dimension.
+    Compute base sizes (cone radius) based on the smallest window dimension.
 
     Args:
         screen_size: (width_px, height_px)
 
     Returns:
-        Dict with base sizes in pixels.
+        Dict with base cone sizes in pixels.
     """
     w, h = screen_size
     min_dim = min(w, h)
     return {
         "cone_radius_px": min_dim * 0.0075,
         "start_radius_px": min_dim * 0.0125,
-        "car_width_px": min_dim * 0.015,
-        "car_length_px": min_dim * 0.030,
     }
 
 
@@ -199,7 +196,6 @@ def _handle_events(
     dragging: bool,
     last_mouse_pos: Optional[Tuple[int, int]],
     car_path_index: int,
-
 ) -> Tuple[
     bool,
     pygame.Surface,
@@ -292,6 +288,10 @@ def _handle_events(
 def _update_display_scale(display_scale: float, dt: float) -> float:
     """
     Update visual scale using keyboard arrows.
+
+    Note:
+        This is a visual-only multiplier. If you want strictly physical sizes,
+        remove display_scale from car/cone size computations.
     """
     keys = pygame.key.get_pressed()
     scale_speed = 2.0 * dt
@@ -310,14 +310,14 @@ def _draw_path_and_car(
     camera: Camera,
     path: Sequence[Point2D],
     screen_size: Tuple[int, int],
-    base_car_width_px: float,
-    base_car_length_px: float,
     display_scale: float,
     car_path_index: int,
 ) -> int:
     """
     Draw the path and animate a car along it, WITHOUT any orientation.
     The car is always drawn with a fixed rotation.
+
+    The car size is defined in world units (CAR_SIZE_M × CAR_SIZE_M).
 
     Returns:
         Updated car index along the path.
@@ -332,12 +332,12 @@ def _draw_path_and_car(
         cx, cy = path[car_path_index]
         scx, scy = camera.world_to_screen(cx, cy, screen_size)
 
-        car_w = max(
-            4, int(base_car_width_px * (camera.zoom / camera.base_zoom) * display_scale)
-        )
-        car_l = max(
-            8, int(base_car_length_px * (camera.zoom / camera.base_zoom) * display_scale)
-        )
+        # Convert world size (meters) to pixels: Zoom is px per world unit
+        car_px = int(CAR_SIZE_M * camera.zoom * display_scale)
+        car_px = max(4, car_px)  # safety clamp
+
+        car_w = car_px
+        car_l = car_px
 
         car_surf = _make_car_surface(car_l, car_w)
         rect = car_surf.get_rect(center=(scx, scy))
@@ -380,8 +380,8 @@ def _draw_cones(
     """
     for cone in cones:
         tag = cone["tag"]
-        wx = float(cone["x"])
-        wy = float(cone["y"])
+        wx = cone["x"]
+        wy = cone["y"]
 
         sx, sy = camera.world_to_screen(wx, wy, screen_size)
         color = COLORS.get(tag, (200, 200, 200))
