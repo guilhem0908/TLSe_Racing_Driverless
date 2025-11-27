@@ -91,7 +91,7 @@ def point_in_vision_cone(
     px, py = point
     cx, cy = car_pos
 
-    vx = px - cx
+
     vy = py - cy
 
     # Range check
