@@ -10,27 +10,15 @@ Controls:
 - Reset view: R
 - Toggle fullscreen: F11
 - Quit: ESC / window close
-
-Features:
-- Car rotates according to its path heading.
-- A transparent gray vision cone is drawn in front of the car.
-- Cones inside the vision cone are outlined in white.
 """
 
 from __future__ import annotations
 
-import math
 from typing import Dict, Optional, Sequence, Tuple, TypedDict
 
 import pygame
 
 from simulation.camera import Camera
-from simulation.vision import (
-    VisionConfig,
-    DEFAULT_VISION,
-    vision_cone_polygon_world,
-    point_in_vision_cone,
-)
 
 
 # -----------------------------
@@ -41,7 +29,6 @@ DEFAULT_HEIGHT: int = 800
 BACKGROUND_COLOR: Tuple[int, int, int] = (30, 30, 30)
 FPS: int = 60
 
-# Car physical size in WORLD UNITS (meters if your world is in meters)
 CAR_SIZE_M: float = 1.5
 
 COLORS: Dict[str, Tuple[int, int, int]] = {
@@ -52,7 +39,6 @@ COLORS: Dict[str, Tuple[int, int, int]] = {
     "path_line": (255, 50, 50),
     "car_body": (255, 0, 255),
     "car_front": (200, 0, 200),
-    "outline": (255, 255, 255),
 }
 
 
@@ -74,8 +60,6 @@ def process_pygame(
     cones: Sequence[Cone],
     world_bounds: WorldBounds,
     path: Optional[Sequence[Point2D]] = None,
-    *,
-    vision: VisionConfig = DEFAULT_VISION,
 ) -> None:
     """
     Open a Pygame window to visualize the track and (optionally) a path.
@@ -84,8 +68,8 @@ def process_pygame(
         cones: List of cones with fields "tag", "x", "y".
         world_bounds: World bounds (min_x, max_x, min_y, max_y).
         path: List of (x, y) points representing a path to draw/animate.
-        vision: Vision cone configuration.
     """
+
     pygame.init()
     screen = _create_screen(DEFAULT_WIDTH, DEFAULT_HEIGHT)
     pygame.display.set_caption("Track and Path Visualization")
@@ -104,8 +88,8 @@ def process_pygame(
     last_mouse_pos: Optional[Tuple[int, int]] = None
 
     car_path_index = 0
-    last_car_angle_deg = 0.0
 
+    # Base pixel sizes adjusted to the current window size
     base_sizes = _compute_base_sizes(screen.get_size())
 
     while running:
@@ -141,25 +125,10 @@ def process_pygame(
 
         display_scale = _update_display_scale(display_scale, dt)
 
+        # Render scene
         screen.fill(BACKGROUND_COLOR)
 
-        car_world_pos: Optional[Point2D] = None
-        car_angle_deg: float = last_car_angle_deg
-
         if path and len(path) > 1:
-            car_world_pos = path[car_path_index]
-            car_angle_deg = _compute_car_angle_deg(path, car_path_index)
-            last_car_angle_deg = car_angle_deg
-
-            _draw_vision_cone(
-                screen=screen,
-                camera=camera,
-                car_pos=car_world_pos,
-                car_angle_deg=car_angle_deg,
-                screen_size=screen_size,
-                vision=vision,
-            )
-
             car_path_index = _draw_path_and_car(
                 screen=screen,
                 camera=camera,
@@ -167,7 +136,6 @@ def process_pygame(
                 screen_size=screen_size,
                 display_scale=display_scale,
                 car_path_index=car_path_index,
-                car_angle_deg=car_angle_deg,
             )
 
         _draw_cones(
@@ -178,9 +146,6 @@ def process_pygame(
             base_cone_radius_px=base_sizes["cone_radius_px"],
             base_start_radius_px=base_sizes["start_radius_px"],
             display_scale=display_scale,
-            car_pos=car_world_pos,
-            car_angle_deg=car_angle_deg,
-            vision=vision,
         )
 
         _draw_hud(screen)
@@ -193,13 +158,21 @@ def process_pygame(
 # Internal helpers
 # -----------------------------
 def _create_screen(width: int, height: int) -> pygame.Surface:
-    """Create a resizable Pygame window."""
+    """
+    Create a resizable Pygame window.
+    """
     return pygame.display.set_mode((width, height), pygame.RESIZABLE)
 
 
 def _compute_base_sizes(screen_size: Tuple[int, int]) -> Dict[str, float]:
     """
     Compute base sizes (cone radius) based on the smallest window dimension.
+
+    Args:
+        screen_size: (width_px, height_px)
+
+    Returns:
+        Dict with base cone sizes in pixels.
     """
     w, h = screen_size
     min_dim = min(w, h)
@@ -236,7 +209,9 @@ def _handle_events(
     Optional[Tuple[int, int]],
     int,
 ]:
-    """Process Pygame events and return updated state."""
+    """
+    Process Pygame events and return updated state.
+    """
     screen_size = screen.get_size()
 
     for event in pygame.event.get():
@@ -244,6 +219,7 @@ def _handle_events(
             running = False
 
         elif event.type == pygame.VIDEORESIZE:
+            # Ignore resize triggered by fullscreen toggle
             if f11_pressed_during_resize:
                 f11_pressed_during_resize = False
             else:
@@ -310,7 +286,13 @@ def _handle_events(
 
 
 def _update_display_scale(display_scale: float, dt: float) -> float:
-    """Update visual scale using keyboard arrows."""
+    """
+    Update visual scale using keyboard arrows.
+
+    Note:
+        This is a visual-only multiplier. If you want strictly physical sizes,
+        remove display_scale from car/cone size computations.
+    """
     keys = pygame.key.get_pressed()
     scale_speed = 2.0 * dt
 
@@ -322,55 +304,6 @@ def _update_display_scale(display_scale: float, dt: float) -> float:
     return max(0.1, min(display_scale, 10.0))
 
 
-def _compute_car_angle_deg(path: Sequence[Point2D], index: int) -> float:
-    """
-    Compute the car heading angle in degrees from the path.
-    """
-    n = len(path)
-    if n < 2:
-        return 0.0
-
-    cx, cy = path[index]
-    nx, ny = path[(index + 1) % n]
-
-    dx = nx - cx
-    dy = ny - cy
-
-    if abs(dx) + abs(dy) < 1e-6:
-        px, py = path[index - 1]
-        dx = cx - px
-        dy = cy - py
-
-    return math.degrees(math.atan2(dy, dx))
-
-
-def _draw_vision_cone(
-    *,
-    screen: pygame.Surface,
-    camera: Camera,
-    car_pos: Point2D,
-    car_angle_deg: float,
-    screen_size: Tuple[int, int],
-    vision: VisionConfig,
-) -> None:
-    """
-    Draw a transparent vision cone in front of the car.
-    """
-    cone_poly_world = vision_cone_polygon_world(
-        car_pos=car_pos,
-        heading_deg=car_angle_deg,
-        vision=vision,
-    )
-
-    cone_poly_screen = [
-        camera.world_to_screen(x, y, screen_size) for (x, y) in cone_poly_world
-    ]
-
-    overlay = pygame.Surface(screen_size, pygame.SRCALPHA)
-    pygame.draw.polygon(overlay, vision.fill_rgba, cone_poly_screen)
-    screen.blit(overlay, (0, 0))
-
-
 def _draw_path_and_car(
     *,
     screen: pygame.Surface,
@@ -379,10 +312,15 @@ def _draw_path_and_car(
     screen_size: Tuple[int, int],
     display_scale: float,
     car_path_index: int,
-    car_angle_deg: float,
 ) -> int:
     """
-    Draw the path and animate a car along it WITH orientation.
+    Draw the path and animate a car along it, WITHOUT any orientation.
+    The car is always drawn with a fixed rotation.
+
+    The car size is defined in world units (CAR_SIZE_M × CAR_SIZE_M).
+
+    Returns:
+        Updated car index along the path.
     """
     screen_points = [camera.world_to_screen(x, y, screen_size) for (x, y) in path]
 
@@ -394,14 +332,16 @@ def _draw_path_and_car(
         cx, cy = path[car_path_index]
         scx, scy = camera.world_to_screen(cx, cy, screen_size)
 
+        # Convert world size (meters) to pixels: Zoom is px per world unit
         car_px = int(CAR_SIZE_M * camera.zoom * display_scale)
-        car_px = max(4, car_px)
+        car_px = max(4, car_px)  # safety clamp
 
-        car_surf = _make_car_surface(car_px, car_px)
-        rotated = pygame.transform.rotate(car_surf, car_angle_deg)
+        car_w = car_px
+        car_l = car_px
 
-        rect = rotated.get_rect(center=(scx, scy))
-        screen.blit(rotated, rect)
+        car_surf = _make_car_surface(car_l, car_w)
+        rect = car_surf.get_rect(center=(scx, scy))
+        screen.blit(car_surf, rect)
 
         car_path_index += 1
         if car_path_index >= len(path):
@@ -413,7 +353,7 @@ def _draw_path_and_car(
 def _make_car_surface(length_px: int, width_px: int) -> pygame.Surface:
     """
     Build a simple car surface (rectangle + front highlight).
-    Front is initially facing +X.
+    The front is always on the right side of the screen.
     """
     surf = pygame.Surface((length_px, width_px), pygame.SRCALPHA)
     pygame.draw.rect(surf, COLORS["car_body"], (0, 0, length_px, width_px))
@@ -434,12 +374,9 @@ def _draw_cones(
     base_cone_radius_px: float,
     base_start_radius_px: float,
     display_scale: float,
-    car_pos: Optional[Point2D],
-    car_angle_deg: float,
-    vision: VisionConfig,
 ) -> None:
     """
-    Draw all cones on screen. Cones inside the vision cone get a white outline.
+    Draw all cones on screen.
     """
     for cone in cones:
         tag = cone["tag"]
@@ -455,23 +392,11 @@ def _draw_cones(
 
         pygame.draw.circle(screen, color, (sx, sy), radius)
 
-        if car_pos is not None and point_in_vision_cone(
-            point=(wx, wy),
-            car_pos=car_pos,
-            heading_deg=car_angle_deg,
-            vision=vision,
-        ):
-            pygame.draw.circle(
-                screen,
-                COLORS["outline"],
-                (sx, sy),
-                radius + 2,
-                width=2,
-            )
-
 
 def _draw_hud(screen: pygame.Surface) -> None:
-    """Draw a small HUD with usage help."""
+    """
+    Draw a small HUD with usage help.
+    """
     font = pygame.font.SysFont("Arial", 20)
     txt = font.render(
         "Zoom: wheel | Pan: left-drag | Scale: arrows | Reset: R",
