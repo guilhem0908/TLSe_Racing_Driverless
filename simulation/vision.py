@@ -30,7 +30,7 @@ class VisionConfig:
         fill_rgba: RGBA color used for translucent filling.
         edge_samples: Polygon arc resolution.
     """
-    range_m: float = 7.0
+    range_m: float = 10.0
     fov_deg: float = 60.0
     fill_rgba: Tuple[int, int, int, int] = (160, 160, 160, 60)
     edge_samples: int = 28

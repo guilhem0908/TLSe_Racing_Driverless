@@ -809,7 +809,52 @@ def run_optimization(track_file_path, pars, opt_type='mintime', imp_opts=None, m
         s_splines = np.insert(s_splines, 0, 0.0)
         vx_profile_opt = np.interp(s_points_opt_interp, s_splines[:-1], v_opt)
     else:
-        vx_profile_opt = math_utils.calc_vel_profile(ggv=None, ax_max_machines=None, v_max=pars["veh_params"]["v_max"], kappa=kappa_opt, el_lengths=el_lengths_opt_interp, closed=True, filt_window=pars["vel_calc_opts"]["vel_profile_conv_filt_window"], dyn_model_exp=pars["vel_calc_opts"]["dyn_model_exp"], drag_coeff=pars["veh_params"]["dragcoeff"], m_veh=pars["veh_params"]["mass"])
+        # -------------------------------------------------------------
+        # PROFIL DE VITESSE SIMPLIFIÉ MAIS PHYSIQUE
+        # -------------------------------------------------------------
+        # On ne dispose pas ici d’un vrai g-g-v (ggv) ni d’ax_max_machines,
+        # donc on construit un profil de vitesse basé sur la courbure :
+        #
+        #   v_max_courbe(s) = sqrt( mu * g / |kappa(s)| )
+        #
+        # (norme de l’accélération latérale = v^2 * |kappa| <= mu * g)
+        #
+        # Ensuite on sature par v_max (vitesse max du véhicule),
+        # et on lisse avec le filtre moyenne glissante de math_utils.conv_filt.
+        # -------------------------------------------------------------
+        g = pars["veh_params"]["g"]
+        mu = pars["optim_opts"]["mue"]
+        v_max = pars["veh_params"]["v_max"]
+
+        # éviter la division par zéro sur les lignes droites
+        kappa_abs = np.abs(kappa_opt)
+        kappa_abs[kappa_abs < 1e-6] = 1e-6
+
+        # vitesse limite par la courbure
+        v_curve = np.sqrt(mu * g / kappa_abs)
+
+        # on sature par la vitesse max véhicule
+        vx_profile_opt = np.minimum(v_curve, v_max)
+
+        # remplace les NaN / inf éventuels (par ex. si kappa ~ 0)
+        vx_profile_opt = np.nan_to_num(
+            vx_profile_opt,
+            nan=v_max,
+            posinf=v_max,
+            neginf=0.0,
+        )
+
+        # lissage optionnel
+        filt_window = pars["vel_calc_opts"]["vel_profile_conv_filt_window"]
+        if filt_window is not None:
+            # s’assurer que la fenêtre est impaire pour conv_filt
+            if not (filt_window % 2 == 1):
+                filt_window += 1
+            vx_profile_opt = math_utils.conv_filt(
+                signal=vx_profile_opt,
+                filt_window=filt_window,
+                closed=True,
+            )
     vx_profile_opt_cl = np.append(vx_profile_opt, vx_profile_opt[0])
     ax_profile_opt = math_utils.calc_ax_profile(vx_profile=vx_profile_opt_cl, el_lengths=el_lengths_opt_interp, eq_length_output=False)
     trajectory_opt = np.column_stack((s_points_opt_interp, raceline_interp, psi_vel_opt, kappa_opt, vx_profile_opt, ax_profile_opt))
