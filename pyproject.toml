@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# realtime.py, planning.py and main.py are kept as they were committed in
+# November 2025.
+extend-exclude = ["realtime.py", "planning.py", "main.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = ["B008", "B905"]
