@@ -119,6 +119,7 @@ class RunResult:
         track_gates: Number of reference gates of the track.
         track_length_m: Length of the reference centre line.
         off_course_at: (time, x, y) where the car left the track, if it did.
+        hit_positions: Position of the cone of every counted contact.
     """
 
     status: str
@@ -131,6 +132,7 @@ class RunResult:
     track_gates: int = 0
     track_length_m: float = 0.0
     off_course_at: Optional[Tuple[float, float, float]] = None
+    hit_positions: List[Point2D] = field(default_factory=list)
 
     @property
     def valid_laps(self) -> List[LapRecord]:
@@ -264,6 +266,7 @@ class ClosedLoop:
             track_gates=len(gates),
             track_length_m=length,
             off_course_at=self.referee.off_course_at,
+            hit_positions=list(self.referee.hit_positions),
         )
 
 

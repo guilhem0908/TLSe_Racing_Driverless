@@ -161,6 +161,7 @@ class Referee:
 
         self.laps: List[LapRecord] = []
         self.cones_hit_total = 0
+        self.hit_positions: List[Point2D] = []
         self.off_course = False
         self.off_course_at: Optional[Tuple[float, float, float]] = None
 
@@ -236,6 +237,7 @@ class Referee:
                     if gap <= self.cone_radius_m:
                         self._lap_cones.add(index)
                         self.cones_hit_total += 1
+                        self.hit_positions.append(self._cones[index])
 
     def _track_gates(self, p0: Point2D, p1: Point2D) -> None:
         """

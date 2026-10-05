@@ -194,6 +194,9 @@ def test_cone_hits_count_once_per_lap(ring, ring_start):
     assert all(lap.valid for lap in referee.laps)
     # Total = the cones touched before the first crossing and after the last one too.
     assert referee.cones_hit_total > 2 * n_blue
+    assert len(referee.hit_positions) == referee.cones_hit_total
+    blue = {(c["x"], c["y"]) for c in ring if c["tag"] == "blue"}
+    assert set(referee.hit_positions) == blue
 
 
 def test_no_hit_when_the_body_just_clears_the_cones(ring, ring_start):
