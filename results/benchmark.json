@@ -1,0 +1,1238 @@
+{
+  "seed": 0,
+  "default_config": {
+    "vehicle": {
+      "wheelbase_m": 1.53,
+      "body_length_m": 2.8,
+      "body_width_m": 1.4,
+      "rear_overhang_m": 0.5,
+      "max_steer_deg": 30.0,
+      "max_steer_rate_deg_s": 180.0,
+      "max_accel_mps2": 3.0,
+      "max_brake_mps2": 6.0,
+      "max_speed_mps": 10.0,
+      "max_lat_accel_mps2": 8.0
+    },
+    "centerline": {
+      "min_gate_width_m": 2.0,
+      "max_gate_width_m": 6.5,
+      "gabriel_shrink": 0.95,
+      "max_step_m": 6.0,
+      "max_length_m": 25.0,
+      "default_half_width_m": 1.5,
+      "edge_neighbor_max_m": 5.5,
+      "min_edge_alignment": 0.5,
+      "virtual_clearance_ratio": 0.7
+    },
+    "pursuit": {
+      "lookahead_base_m": 1.0,
+      "lookahead_gain_s": 0.4,
+      "lookahead_min_m": 2.0,
+      "lookahead_max_m": 5.0,
+      "max_lat_accel_mps2": 4.0,
+      "plan_brake_mps2": 4.0,
+      "end_speed_mps": 1.5,
+      "search_speed_mps": 1.5,
+      "speed_gain": 8.0,
+      "resample_step_m": 0.5,
+      "curvature_arm_pts": 3
+    },
+    "memory_ttl_s": 6.0,
+    "merge_radius_m": 0.5,
+    "min_observations": 3,
+    "one_sided_fallback": true,
+    "noise_std_m": 0.0,
+    "seed": 0,
+    "dt": 0.02,
+    "target_laps": 3,
+    "max_time_s": 900.0
+  },
+  "min_turn_radius_m": 2.65,
+  "environment": {
+    "python": "3.14.2",
+    "numpy": "2.3.5",
+    "system": "Windows",
+    "machine": "AMD64",
+    "cpu_count": 32
+  },
+  "jobs": 8,
+  "wall_time_s": 98.0,
+  "runs_time_s": 385.1,
+  "simulated_time_s": 3387.0,
+  "tracks": [
+    {
+      "track": "belgium",
+      "blue_cones": 67,
+      "yellow_cones": 63,
+      "big_orange_cones": 2,
+      "paired_gates": 75,
+      "reference_gates": 75,
+      "centerline_length_m": 130.6,
+      "gate_width_min_m": 2.99,
+      "gate_width_median_m": 3.56,
+      "gate_width_max_m": 4.52,
+      "tightest_radius_m": 4.86
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "blue_cones": 490,
+      "yellow_cones": 490,
+      "big_orange_cones": 4,
+      "paired_gates": 492,
+      "reference_gates": 492,
+      "centerline_length_m": 831.1,
+      "gate_width_min_m": 2.96,
+      "gate_width_median_m": 3.0,
+      "gate_width_max_m": 3.0,
+      "tightest_radius_m": 2.13
+    },
+    {
+      "track": "peanut",
+      "blue_cones": 54,
+      "yellow_cones": 64,
+      "big_orange_cones": 4,
+      "paired_gates": 77,
+      "reference_gates": 77,
+      "centerline_length_m": 104.3,
+      "gate_width_min_m": 3.82,
+      "gate_width_median_m": 4.23,
+      "gate_width_max_m": 5.12,
+      "tightest_radius_m": 3.62
+    },
+    {
+      "track": "small_track",
+      "blue_cones": 37,
+      "yellow_cones": 30,
+      "big_orange_cones": 4,
+      "paired_gates": 38,
+      "reference_gates": 38,
+      "centerline_length_m": 104.7,
+      "gate_width_min_m": 4.06,
+      "gate_width_median_m": 4.78,
+      "gate_width_max_m": 5.26,
+      "tightest_radius_m": 3.48
+    }
+  ],
+  "runs": [
+    {
+      "track": "belgium",
+      "family": "sensor",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        25.3,
+        25.28,
+        25.28
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 25.28,
+      "mean_lap_s": 25.29,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.16,
+      "max_speed_mps": 5.72,
+      "max_lat_accel_mps2": 4.56,
+      "sim_time_s": 77.2,
+      "distance_m": 394.7,
+      "off_course_at": null,
+      "wall_time_s": 6.7
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "sensor",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        161.6,
+        161.3,
+        161.3
+      ],
+      "lap_cones_hit": [
+        11,
+        11,
+        11
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 161.3,
+      "mean_lap_s": 161.4,
+      "cones_per_lap": 11.0,
+      "cones_hit_total": 33,
+      "mean_speed_mps": 5.15,
+      "max_speed_mps": 5.96,
+      "max_lat_accel_mps2": 6.3,
+      "sim_time_s": 485.0,
+      "distance_m": 2480.9,
+      "off_course_at": null,
+      "wall_time_s": 44.4
+    },
+    {
+      "track": "peanut",
+      "family": "sensor",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        21.07,
+        21.06,
+        21.06
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 21.06,
+      "mean_lap_s": 21.06,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 4.95,
+      "max_speed_mps": 5.64,
+      "max_lat_accel_mps2": 5.44,
+      "sim_time_s": 65.2,
+      "distance_m": 314.5,
+      "off_course_at": null,
+      "wall_time_s": 6.7
+    },
+    {
+      "track": "small_track",
+      "family": "sensor",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        25.99,
+        25.68,
+        25.68
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 25.68,
+      "mean_lap_s": 25.78,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 4.06,
+      "max_speed_mps": 5.2,
+      "max_lat_accel_mps2": 4.55,
+      "sim_time_s": 79.7,
+      "distance_m": 315.3,
+      "off_course_at": null,
+      "wall_time_s": 4.7
+    },
+    {
+      "track": "belgium",
+      "family": "sensor",
+      "sensor": "first",
+      "range_m": 7.0,
+      "fov_deg": 60.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        21.22,
+        21.04,
+        21.04
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 21.04,
+      "mean_lap_s": 21.1,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 6.19,
+      "max_speed_mps": 7.63,
+      "max_lat_accel_mps2": 4.52,
+      "sim_time_s": 64.7,
+      "distance_m": 394.9,
+      "off_course_at": null,
+      "wall_time_s": 8.1
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "sensor",
+      "sensor": "first",
+      "range_m": 7.0,
+      "fov_deg": 60.0,
+      "variant": "full",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 7.74,
+      "max_lat_accel_mps2": 4.59,
+      "sim_time_s": 51.7,
+      "distance_m": 302.4,
+      "off_course_at": [
+        51.7,
+        39.2,
+        0.3
+      ],
+      "wall_time_s": 6.6
+    },
+    {
+      "track": "peanut",
+      "family": "sensor",
+      "sensor": "first",
+      "range_m": 7.0,
+      "fov_deg": 60.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        18.96,
+        19.08,
+        19.08
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 18.96,
+      "mean_lap_s": 19.04,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.48,
+      "max_speed_mps": 7.1,
+      "max_lat_accel_mps2": 4.96,
+      "sim_time_s": 59.2,
+      "distance_m": 313.4,
+      "off_course_at": null,
+      "wall_time_s": 7.7
+    },
+    {
+      "track": "small_track",
+      "family": "sensor",
+      "sensor": "first",
+      "range_m": 7.0,
+      "fov_deg": 60.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        17.83,
+        17.74,
+        17.72
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 17.72,
+      "mean_lap_s": 17.77,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.89,
+      "max_speed_mps": 7.2,
+      "max_lat_accel_mps2": 4.98,
+      "sim_time_s": 55.1,
+      "distance_m": 313.0,
+      "off_course_at": null,
+      "wall_time_s": 4.7
+    },
+    {
+      "track": "belgium",
+      "family": "sensor",
+      "sensor": "wide",
+      "range_m": 8.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        20.54,
+        20.32,
+        20.32
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 20.32,
+      "mean_lap_s": 20.39,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 6.4,
+      "max_speed_mps": 8.1,
+      "max_lat_accel_mps2": 4.29,
+      "sim_time_s": 62.5,
+      "distance_m": 391.8,
+      "off_course_at": null,
+      "wall_time_s": 6.4
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "sensor",
+      "sensor": "wide",
+      "range_m": 8.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        130.71,
+        130.08,
+        130.08
+      ],
+      "lap_cones_hit": [
+        11,
+        11,
+        11
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 130.08,
+      "mean_lap_s": 130.29,
+      "cones_per_lap": 11.0,
+      "cones_hit_total": 33,
+      "mean_speed_mps": 6.38,
+      "max_speed_mps": 8.26,
+      "max_lat_accel_mps2": 5.12,
+      "sim_time_s": 391.7,
+      "distance_m": 2481.3,
+      "off_course_at": null,
+      "wall_time_s": 62.4
+    },
+    {
+      "track": "peanut",
+      "family": "sensor",
+      "sensor": "wide",
+      "range_m": 8.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        18.87,
+        18.87,
+        18.86
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 18.86,
+      "mean_lap_s": 18.87,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.53,
+      "max_speed_mps": 7.31,
+      "max_lat_accel_mps2": 4.32,
+      "sim_time_s": 58.7,
+      "distance_m": 315.0,
+      "off_course_at": null,
+      "wall_time_s": 7.8
+    },
+    {
+      "track": "small_track",
+      "family": "sensor",
+      "sensor": "wide",
+      "range_m": 8.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        16.97,
+        16.8,
+        16.8
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 16.8,
+      "mean_lap_s": 16.86,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 6.21,
+      "max_speed_mps": 7.62,
+      "max_lat_accel_mps2": 4.94,
+      "sim_time_s": 52.3,
+      "distance_m": 314.6,
+      "off_course_at": null,
+      "wall_time_s": 3.6
+    },
+    {
+      "track": "belgium",
+      "family": "sensor",
+      "sensor": "long",
+      "range_m": 12.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        19.76,
+        19.54,
+        19.54
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 19.54,
+      "mean_lap_s": 19.61,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 6.66,
+      "max_speed_mps": 9.84,
+      "max_lat_accel_mps2": 4.3,
+      "sim_time_s": 60.2,
+      "distance_m": 391.7,
+      "off_course_at": null,
+      "wall_time_s": 7.0
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "sensor",
+      "sensor": "long",
+      "range_m": 12.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        122.04,
+        121.12,
+        121.12
+      ],
+      "lap_cones_hit": [
+        11,
+        11,
+        11
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 121.12,
+      "mean_lap_s": 121.43,
+      "cones_per_lap": 11.0,
+      "cones_hit_total": 33,
+      "mean_speed_mps": 6.84,
+      "max_speed_mps": 9.96,
+      "max_lat_accel_mps2": 5.12,
+      "sim_time_s": 365.1,
+      "distance_m": 2481.4,
+      "off_course_at": null,
+      "wall_time_s": 88.6
+    },
+    {
+      "track": "peanut",
+      "family": "sensor",
+      "sensor": "long",
+      "range_m": 12.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        18.88,
+        18.89,
+        18.88
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 18.88,
+      "mean_lap_s": 18.88,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.52,
+      "max_speed_mps": 7.31,
+      "max_lat_accel_mps2": 4.58,
+      "sim_time_s": 58.7,
+      "distance_m": 315.0,
+      "off_course_at": null,
+      "wall_time_s": 11.5
+    },
+    {
+      "track": "small_track",
+      "family": "sensor",
+      "sensor": "long",
+      "range_m": 12.0,
+      "fov_deg": 120.0,
+      "variant": "full",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        16.46,
+        16.2,
+        16.2
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 16.2,
+      "mean_lap_s": 16.29,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 6.43,
+      "max_speed_mps": 9.56,
+      "max_lat_accel_mps2": 4.71,
+      "sim_time_s": 50.6,
+      "distance_m": 314.6,
+      "off_course_at": null,
+      "wall_time_s": 3.9
+    },
+    {
+      "track": "belgium",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_memory",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        25.41,
+        25.36,
+        25.36
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 25.36,
+      "mean_lap_s": 25.38,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.15,
+      "max_speed_mps": 5.73,
+      "max_lat_accel_mps2": 5.3,
+      "sim_time_s": 77.5,
+      "distance_m": 399.4,
+      "off_course_at": null,
+      "wall_time_s": 2.4
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_memory",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 6.01,
+      "max_lat_accel_mps2": 6.56,
+      "sim_time_s": 77.0,
+      "distance_m": 389.0,
+      "off_course_at": [
+        77.0,
+        39.0,
+        -16.9
+      ],
+      "wall_time_s": 3.2
+    },
+    {
+      "track": "peanut",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_memory",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        21.24,
+        21.48,
+        21.48
+      ],
+      "lap_cones_hit": [
+        3,
+        3,
+        3
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 21.24,
+      "mean_lap_s": 21.4,
+      "cones_per_lap": 3.0,
+      "cones_hit_total": 9,
+      "mean_speed_mps": 4.87,
+      "max_speed_mps": 5.89,
+      "max_lat_accel_mps2": 5.88,
+      "sim_time_s": 66.3,
+      "distance_m": 334.0,
+      "off_course_at": null,
+      "wall_time_s": 2.5
+    },
+    {
+      "track": "small_track",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_memory",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        28.84,
+        30.24,
+        30.24
+      ],
+      "lap_cones_hit": [
+        2,
+        2,
+        2
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 28.84,
+      "mean_lap_s": 29.77,
+      "cones_per_lap": 2.0,
+      "cones_hit_total": 6,
+      "mean_speed_mps": 3.52,
+      "max_speed_mps": 5.4,
+      "max_lat_accel_mps2": 6.15,
+      "sim_time_s": 91.6,
+      "distance_m": 332.1,
+      "off_course_at": null,
+      "wall_time_s": 2.5
+    },
+    {
+      "track": "belgium",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_fallback",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.59,
+      "max_lat_accel_mps2": 4.56,
+      "sim_time_s": 29.3,
+      "distance_m": 128.6,
+      "off_course_at": [
+        29.3,
+        -3.8,
+        1.9
+      ],
+      "wall_time_s": 1.4
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_fallback",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.63,
+      "max_lat_accel_mps2": 4.68,
+      "sim_time_s": 27.7,
+      "distance_m": 126.8,
+      "off_course_at": [
+        27.7,
+        38.1,
+        39.5
+      ],
+      "wall_time_s": 1.5
+    },
+    {
+      "track": "peanut",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_fallback",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.54,
+      "max_lat_accel_mps2": 4.08,
+      "sim_time_s": 8.2,
+      "distance_m": 22.9,
+      "off_course_at": [
+        8.2,
+        22.3,
+        -1.7
+      ],
+      "wall_time_s": 0.4
+    },
+    {
+      "track": "small_track",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "no_fallback",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 0,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.01,
+      "max_lat_accel_mps2": 4.33,
+      "sim_time_s": 32.4,
+      "distance_m": 107.4,
+      "off_course_at": [
+        32.4,
+        -11.2,
+        13.3
+      ],
+      "wall_time_s": 1.1
+    },
+    {
+      "track": "belgium",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.1",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        25.35,
+        25.29,
+        25.25
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 25.25,
+      "mean_lap_s": 25.3,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 5.16,
+      "max_speed_mps": 5.73,
+      "max_lat_accel_mps2": 4.76,
+      "sim_time_s": 77.3,
+      "distance_m": 394.6,
+      "off_course_at": null,
+      "wall_time_s": 6.0
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.1",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        161.61,
+        161.09,
+        161.21
+      ],
+      "lap_cones_hit": [
+        11,
+        11,
+        11
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 161.09,
+      "mean_lap_s": 161.3,
+      "cones_per_lap": 11.0,
+      "cones_hit_total": 33,
+      "mean_speed_mps": 5.15,
+      "max_speed_mps": 5.96,
+      "max_lat_accel_mps2": 6.36,
+      "sim_time_s": 484.7,
+      "distance_m": 2480.7,
+      "off_course_at": null,
+      "wall_time_s": 43.3
+    },
+    {
+      "track": "peanut",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.1",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        21.05,
+        21.06,
+        21.03
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 21.03,
+      "mean_lap_s": 21.05,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 4.95,
+      "max_speed_mps": 5.67,
+      "max_lat_accel_mps2": 5.84,
+      "sim_time_s": 65.2,
+      "distance_m": 313.7,
+      "off_course_at": null,
+      "wall_time_s": 6.0
+    },
+    {
+      "track": "small_track",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.1",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        26.01,
+        26.04,
+        26.04
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 26.01,
+      "mean_lap_s": 26.03,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 4.02,
+      "max_speed_mps": 5.23,
+      "max_lat_accel_mps2": 4.44,
+      "sim_time_s": 80.4,
+      "distance_m": 315.0,
+      "off_course_at": null,
+      "wall_time_s": 4.4
+    },
+    {
+      "track": "belgium",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.2",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 1,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.66,
+      "max_lat_accel_mps2": 6.78,
+      "sim_time_s": 27.5,
+      "distance_m": 129.5,
+      "off_course_at": [
+        27.5,
+        -3.3,
+        2.1
+      ],
+      "wall_time_s": 3.1
+    },
+    {
+      "track": "hairpins_increasing_difficulty",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.2",
+      "status": "off_course",
+      "laps_target": 3,
+      "laps_valid": 0,
+      "lap_times_s": [],
+      "lap_cones_hit": [],
+      "lap_valid": [],
+      "best_lap_s": null,
+      "mean_lap_s": null,
+      "cones_per_lap": null,
+      "cones_hit_total": 4,
+      "mean_speed_mps": null,
+      "max_speed_mps": 5.83,
+      "max_lat_accel_mps2": 7.24,
+      "sim_time_s": 54.4,
+      "distance_m": 255.8,
+      "off_course_at": [
+        54.4,
+        -2.9,
+        15.1
+      ],
+      "wall_time_s": 8.9
+    },
+    {
+      "track": "peanut",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.2",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        21.79,
+        21.76,
+        21.73
+      ],
+      "lap_cones_hit": [
+        0,
+        0,
+        0
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 21.73,
+      "mean_lap_s": 21.76,
+      "cones_per_lap": 0.0,
+      "cones_hit_total": 0,
+      "mean_speed_mps": 4.79,
+      "max_speed_mps": 5.92,
+      "max_lat_accel_mps2": 7.41,
+      "sim_time_s": 67.4,
+      "distance_m": 316.4,
+      "off_course_at": null,
+      "wall_time_s": 9.6
+    },
+    {
+      "track": "small_track",
+      "family": "ablation",
+      "sensor": "default",
+      "range_m": 4.0,
+      "fov_deg": 100.0,
+      "variant": "noise_0.2",
+      "status": "finished",
+      "laps_target": 3,
+      "laps_valid": 3,
+      "lap_times_s": [
+        26.81,
+        27.33,
+        26.06
+      ],
+      "lap_cones_hit": [
+        0,
+        1,
+        3
+      ],
+      "lap_valid": [
+        true,
+        true,
+        true
+      ],
+      "best_lap_s": 26.06,
+      "mean_lap_s": 26.73,
+      "cones_per_lap": 1.33,
+      "cones_hit_total": 4,
+      "mean_speed_mps": 3.92,
+      "max_speed_mps": 5.55,
+      "max_lat_accel_mps2": 7.29,
+      "sim_time_s": 82.5,
+      "distance_m": 313.8,
+      "off_course_at": null,
+      "wall_time_s": 8.0
+    }
+  ]
+}
