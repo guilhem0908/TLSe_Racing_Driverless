@@ -15,9 +15,12 @@ detection noise, which uses a fixed seed. Outputs, in ``results/``:
 - ``benchmark.csv``: one line per run;
 - ``benchmark.md``: the tables shown in the README.
 
+A full run with the default output directory also copies the tables into
+README.md, between the two ``benchmark`` marker comments.
+
 Usage (from the repository root):
-    python scripts/benchmark.py            # full benchmark
-    python scripts/benchmark.py --quick    # one lap, three short tracks
+    python scripts/benchmark.py                                # full benchmark
+    python scripts/benchmark.py --quick --out-dir build/bench  # smoke run
 """
 
 from __future__ import annotations
@@ -76,6 +79,10 @@ VARIANTS: List[Tuple[str, str, Dict[str, Any]]] = [
 ]
 
 QUICK_TRACKS = ["belgium", "peanut", "small_track"]
+
+README = ROOT / "README.md"
+README_BEGIN = "<!-- benchmark:begin (written by scripts/benchmark.py) -->"
+README_END = "<!-- benchmark:end -->"
 
 
 def describe_track(name: str) -> Dict[str, Any]:
@@ -322,6 +329,21 @@ def write_outputs(data: Dict[str, Any], out_dir: Path) -> None:
         f.write(render_markdown(data))
 
 
+def update_readme(markdown: str) -> bool:
+    """Replace the benchmark block of README.md. Returns False if there is none."""
+    if not README.is_file():
+        return False
+    text = README.read_text(encoding="utf-8")
+    if README_BEGIN not in text or README_END not in text:
+        return False
+    head, rest = text.split(README_BEGIN, 1)
+    _, tail = rest.split(README_END, 1)
+    block = f"{README_BEGIN}\n\n{markdown.strip()}\n\n{README_END}"
+    with open(README, "w", encoding="utf-8", newline="\n") as f:
+        f.write(head + block + tail)
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--tracks", nargs="*", default=None, help="tracks to run (default: all)")
@@ -367,6 +389,9 @@ def main() -> int:
         "runs": runs,
     }
     write_outputs(data, args.out_dir)
+    full_run = not args.quick and args.tracks is None and args.laps == TARGET_LAPS
+    if full_run and args.out_dir.resolve() == (ROOT / "results").resolve():
+        update_readme(render_markdown(data))
 
     for r in runs:
         print(
@@ -374,7 +399,7 @@ def main() -> int:
             f"{r['status']:10s} laps {r['laps_valid']}/{r['laps_target']} "
             f"best {_fmt(r['best_lap_s'])} s  cones/lap {_fmt(r['cones_per_lap'], 1)}"
         )
-    print(f"wrote {args.out_dir / 'benchmark.md'} ({wall:.0f} s)")
+    print(f"wrote benchmark.json, benchmark.csv and benchmark.md ({wall:.0f} s)")
     return 0
 
 
