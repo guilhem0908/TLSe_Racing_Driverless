@@ -1,5 +1,5 @@
 """
-process_pygame.py
+simulation/main_simulation.py
 
 Interactive visualization of cones (track) and an optional path using Pygame.
 
