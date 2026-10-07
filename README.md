@@ -265,7 +265,7 @@ main.py, realtime.py, planning.py   November 2025 entry point and reactive proto
 track_utils.py                      track loader and helpers
 simulation/                         camera, field-of-view model, track viewer
 closed_loop/                        October 2026 closed loop (see above)
-scripts/                            benchmark, figure, GIF recorder, track viewer launcher
+scripts/                            benchmark, figure, GIF recorder, 2025 replay, track viewer launcher
 tests/                              pytest suite
 tracks/                             four cone maps (CSV)
 results/                            benchmark output
