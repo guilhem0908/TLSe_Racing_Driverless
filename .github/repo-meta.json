@@ -1,5 +1,5 @@
 {
-  "description": "2D Pygame simulator for Formula Student driverless cone tracks: field-of-view sensor model, cone memory, pure-pursuit closed loop with lap timer and benchmark (team prototype).",
+  "description": "2D Pygame simulator for Formula Student driverless cone tracks: sensor model, cone memory, pure-pursuit closed loop, lap timer, benchmark (team prototype).",
   "topics": [
     "formula-student",
     "driverless",
