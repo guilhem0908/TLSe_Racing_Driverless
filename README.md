@@ -16,7 +16,7 @@ a team prototype hosted on a personal account, not the team's official software.
 The repository has two layers, written a year apart:
 
 - **November 2025, team work.** The simulation layer (track loader, camera, viewer, field-of-view
-  sensor model) by Guilhem Carmouze, and a first reactive controller by Alec Bossard.
+  sensor model) by Guilhem Carmouze, and a first reactive controller by a teammate.
 - **October 2026, follow-up by Guilhem Carmouze.** The `closed_loop/` package: a controller that
   completes laps using only what the sensor model lets the car see, a referee that times laps and
   counts cone contacts, a benchmark, tests and CI. It lives in separate modules; the 2025 files are
@@ -32,8 +32,8 @@ Everything here is a 2D simulation result. Nothing in this repository has run on
 | 2D camera (fit to track, zoom about cursor, pan) | `simulation/camera.py` | Nov 2025, G. Carmouze | Works, tested |
 | Field-of-view sensor model (range + opening angle) | `simulation/vision.py` | Nov 2025, G. Carmouze | Works, tested. Purely geometric: no occlusion, no image processing |
 | Track viewer (car moved along a given path, sector overlay) | `simulation/main_simulation.py` | Nov 2025, G. Carmouze | Works. Reachable through `scripts/show_track.py`; `main.py` no longer calls it |
-| Reactive controller (aim at the midpoint of the nearest visible blue and yellow cones, constant 5 m/s) | `realtime.py`, `main.py` | Nov 2025, A. Bossard | Opens and runs. First prototype: it uses only the cones in view, keeps no memory of them and has nothing to do when none is in view. Replayed off-screen with `scripts/replay_reactive.py`, the car strays more than 4 m from the middle of the track on all four bundled tracks within 40 simulated seconds |
-| Offline "zipper" centre line | `planning.py` | Nov 2025, A. Bossard | Not called by any entry point |
+| Reactive controller (aim at the midpoint of the nearest visible blue and yellow cones, constant 5 m/s) | `realtime.py`, `main.py` | Nov 2025, a teammate | Opens and runs. First prototype: it uses only the cones in view, keeps no memory of them and has nothing to do when none is in view. Replayed off-screen with `scripts/replay_reactive.py`, the car strays more than 4 m from the middle of the track on all four bundled tracks within 40 simulated seconds |
+| Offline "zipper" centre line | `planning.py` | Nov 2025, a teammate | Not called by any entry point |
 | Closed loop (cone memory, paired-cone centre line, bicycle model, pure pursuit) | `closed_loop/` | Oct 2026, G. Carmouze | 3 valid laps out of 3 on each of the four tracks with the default sensor; no cone touched on three of them, 11 per lap on the hairpin track (see Results) |
 | Referee (lap timer, cone-hit counter, off-course check) | `closed_loop/referee.py` | Oct 2026, G. Carmouze | Works, tested |
 | Benchmark, figure, GIF and replay scripts | `scripts/` | Oct 2026, G. Carmouze | Reproduce every number and picture of this page |
@@ -274,11 +274,12 @@ docs/                               figure and GIF
 
 ## Authors and credits
 
-Who wrote what, by `git blame` at the last commit of 2025 (`7bf450f`):
+Who wrote what, by `git blame` at the last commit of 2025 (`7bf450f`); the teammate's name is in
+the commit history:
 
 - **Guilhem Carmouze**: `track_utils.py`, `simulation/camera.py`, `simulation/vision.py`,
   `simulation/main_simulation.py`, and 8 of the 14 lines of `main.py`.
-- **Alec Bossard**: `realtime.py`, `planning.py`, and the other 6 lines of `main.py`.
+- **A teammate**: `realtime.py`, `planning.py`, and the other 6 lines of `main.py`.
   `realtime.py`, `planning.py` and `main.py` are kept exactly as committed (comments in French).
 
 Everything added in October 2026 (`closed_loop/`, `scripts/`, `tests/`, CI, this page) is by
