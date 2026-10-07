@@ -32,11 +32,11 @@ Everything here is a 2D simulation result. Nothing in this repository has run on
 | 2D camera (fit to track, zoom about cursor, pan) | `simulation/camera.py` | Nov 2025, G. Carmouze | Works, tested |
 | Field-of-view sensor model (range + opening angle) | `simulation/vision.py` | Nov 2025, G. Carmouze | Works, tested. Purely geometric: no occlusion, no image processing |
 | Track viewer (car moved along a given path, sector overlay) | `simulation/main_simulation.py` | Nov 2025, G. Carmouze | Works. Reachable through `scripts/show_track.py`; `main.py` no longer calls it |
-| Reactive controller (aim at the midpoint of the nearest visible blue and yellow cones, constant 5 m/s) | `realtime.py`, `main.py` | Nov 2025, A. Bossard | Opens and runs. First prototype: with only the cones in view and no fallback, the car does not stay between the cones for a full lap on the bundled tracks |
+| Reactive controller (aim at the midpoint of the nearest visible blue and yellow cones, constant 5 m/s) | `realtime.py`, `main.py` | Nov 2025, A. Bossard | Opens and runs. First prototype: it uses only the cones in view, keeps no memory of them and has nothing to do when none is in view. Replayed off-screen with `scripts/replay_reactive.py`, the car strays more than 4 m from the middle of the track on all four bundled tracks within 40 simulated seconds |
 | Offline "zipper" centre line | `planning.py` | Nov 2025, A. Bossard | Not called by any entry point |
 | Closed loop (cone memory, paired-cone centre line, bicycle model, pure pursuit) | `closed_loop/` | Oct 2026, G. Carmouze | 3 valid laps out of 3 on each of the four tracks with the default sensor; no cone touched on three of them, 11 per lap on the hairpin track (see Results) |
 | Referee (lap timer, cone-hit counter, off-course check) | `closed_loop/referee.py` | Oct 2026, G. Carmouze | Works, tested |
-| Benchmark, figure and GIF scripts | `scripts/` | Oct 2026, G. Carmouze | Reproduce every number and picture of this page |
+| Benchmark, figure, GIF and replay scripts | `scripts/` | Oct 2026, G. Carmouze | Reproduce every number and picture of this page |
 | Camera-based cone detection, localisation or mapping, tyre model, racing line, ROS interface | - | - | Not in this repository |
 
 ## How the closed loop works
@@ -225,6 +225,7 @@ Other entry points:
 python -m closed_loop --help                      # sensor range, field of view, memory, noise, laps
 python -m closed_loop --track hairpins_increasing_difficulty --range 8 --fov 120
 python main.py                                    # November 2025 reactive prototype (window)
+python scripts/replay_reactive.py                 # the same prototype replayed off-screen, prints where it strays
 python scripts/show_track.py --track peanut       # November 2025 track viewer (window)
 ```
 
